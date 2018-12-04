@@ -14,7 +14,7 @@
     "deploy": "gcloud beta functions deploy three-doors --trigger-http --stage-bucket gs://three-doors-xxxx"
   },
   "dependencies": {
-     "lodash": "4.x"
+    "lodash": "4.x"
   },
   "devDependencies": {
     "semistandard": "^9.1.0"
