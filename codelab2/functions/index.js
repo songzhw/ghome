@@ -40,8 +40,11 @@ app.intent("actions_intent_PERMISSION", (conv, params, permissionGranted) => {
 // The intent collects a parameter named 'color'.
 app.intent("favorite color", (conv, { color }) => {
   const luckyNumber = color.length;
+  const audioSound = 'https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg';
   if (conv.data.userName) {
-    conv.close(`${conv.data.userName}, your lucky nmae is ${luckyNumber}`);
+    let word = `${conv.data.userName}, your lucky number is ${luckyNumber}`
+    let wordWithSound = `<speak>${word} <audio src="${audioSound}"/> </speak>`
+    conv.close(wordWithSound);
   } else {
     conv.close("Your second lucky number is " + luckyNumber);
   }
