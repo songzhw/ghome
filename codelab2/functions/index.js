@@ -44,7 +44,7 @@ app.intent("favorite color", (conv, { color }) => {
   if (conv.data.userName) {
     let word = `${conv.data.userName}, your lucky number is ${luckyNumber}`
     let wordWithSound = `<speak>${word} <audio src="${audioSound}"/> </speak>`
-    conv.close(wordWithSound);
+    conv.close(wordWithSound)
   } else {
     conv.close("Your second lucky number is " + luckyNumber);
   }
