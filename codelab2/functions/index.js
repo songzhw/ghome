@@ -97,7 +97,7 @@ const colorMap = {
 };
 // "display" prop is the background color
 
-app.intent('favorite fake  color', (conv, {fakeColor}) => {
+app.intent('favorite fake color', (conv, {fakeColor}) => {
     conv.close("Here is the color", new BasicCard(colorMap[fakeColor]))
 })
 
