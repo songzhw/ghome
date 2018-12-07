@@ -109,5 +109,24 @@ app.intent("favorite fake color", (conv, { fakeColor }) => {
   conv.close("Here is the color", new BasicCard(colorMap[fakeColor]));
 });
 
+// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+app.intent('actions_intent_NO_INPUT', (conv) => {
+    const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'))
+    if(repromptCount === 0){
+        conv.ask('[0] Which color would you like to hear about?')
+    } else if(repromptCount === 1){
+        conv.ask('[1] Please say the name of a color')
+    } else if(conv.arguments.get('IS_FINAL_REPROMPT')) {
+        conv.close("[2] Sorry, we, sir song, are having some trouble. Let's try it again Later. Goodby.")
+    }
+})
+
+
+
+
+
+
+// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 // Set the DialogflowApp object to handle the HTTPS POST request.
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
