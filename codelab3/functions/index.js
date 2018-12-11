@@ -161,7 +161,10 @@ const fakeColorCarousel = () => {
   return carousel;
 };
 
-app.intent("favorite color - yes", conv => {
+// TODO odd! DialogFlow always shows 'webhook err(206) : Dialogflow IntentHandler not found for itnent: yesFavoriteColor'
+// TODO so I close the "fulfillment - enable webhook call for this intent" on DialogFlow's console
+
+app.intent("yesFavoriteColor", (conv) => {
   conv.ask("Which color, indigo taco, pink unicorn or blue grey coffee?");
   // If the user is using a screened device, display the carousel
   if (conv.screen) return conv.ask(fakeColorCarousel());
@@ -175,7 +178,7 @@ app.intent("favorite fake color", (conv, { fakeColor }) => {
     conv.ask(colorMap[fakeColor].text);
   }
 });
-// webhook err(206) : Dialogflow IntentHandler not found for itnent: favorite color-yes
+
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 // Set the DialogflowApp object to handle the HTTPS POST request.
