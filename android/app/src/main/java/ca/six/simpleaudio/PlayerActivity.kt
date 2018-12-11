@@ -10,3 +10,5 @@ class PlayerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_player)
     }
 }
+
+// ref: https://cdn-images-1.medium.com/max/2000/1*iu1emZtq5AorvsfYNzoF6A.png
