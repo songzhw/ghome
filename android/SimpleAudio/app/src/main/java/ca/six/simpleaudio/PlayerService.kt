@@ -24,7 +24,7 @@ class PlayerService : MediaBrowserServiceCompat() {
 
         // TODO remove it to outside
         val userAgent = Util.getUserAgent(this, "SimpleAudio") // Util from Exo
-        val mediaUri = Uri.parse("assets:///jazz_in_paris.mp3")
+        val mediaUri = Uri.parse("asset:///jazz_in_paris.mp3")
         val dataSrcFactory = DefaultDataSourceFactory(this, userAgent)
         val mediaSource = ExtractorMediaSource(mediaUri, dataSrcFactory, DefaultExtractorsFactory(), null, null)
 

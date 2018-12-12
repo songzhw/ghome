@@ -17,18 +17,19 @@ class PlayerActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_player)
 
         val componentName = ComponentName(this, PlayerService::class.java)
-        mediaBrowser = MediaBrowserCompat(this, componentName,  connectionCallbacks, null)
+        mediaBrowser = MediaBrowserCompat(this, componentName, connectionCallbacks, null)
+
         ibPause.setOnClickListener(this)
         ibPlay.setOnClickListener(this)
     }
 
     private val connectionCallbacks = object : MediaBrowserCompat.ConnectionCallback() {
         override fun onConnected() {
-            val context = this@PlayerActivity
-            mediaBrowser.sessionToken.also { token ->
-                mediaController = MediaControllerCompat(context, token)
-                MediaControllerCompat.setMediaController(context, mediaController)
-            }
+            println("szw PlayerActvity connectCallback: success!")
+            val activity = this@PlayerActivity
+            val token = mediaBrowser.sessionToken
+            mediaController = MediaControllerCompat(activity, token)
+            MediaControllerCompat.setMediaController(activity, mediaController)
         }
 
         override fun onConnectionSuspended() {
@@ -51,9 +52,9 @@ class PlayerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        if(v == ibPlay){
+        if (v == ibPlay) {
             mediaController.transportControls.play()
-        } else if (v == ibPause){
+        } else if (v == ibPause) {
             mediaController.transportControls.pause()
         }
     }

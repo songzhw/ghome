@@ -10,15 +10,15 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 class SimplePlayEventListener : Player.EventListener {
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
         println("szw PlayEventListenr onPlayerStateChanged()")
-        println()
     }
 
     override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
         println("szw PlayEventListenr onPlaybackParametersChanged()")
     }
 
-    override fun onPlayerError(error: ExoPlaybackException?) {
-        println("szw PlayEventListenr onPlayerError()")
+    override fun onPlayerError(error: ExoPlaybackException) {
+        println("szw PlayEventListenr onPlayerError() $error, ${error.type}")
+
     }
 
     override fun onSeekProcessed() {

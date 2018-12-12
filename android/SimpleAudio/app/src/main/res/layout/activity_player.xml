@@ -9,12 +9,12 @@
         tools:context=".PlayerActivity">
 
     <ImageButton android:id="@+id/ibPause"
-                 android:layout_width="60dp" android:layout_height="60dp"
+                 android:layout_width="85dp" android:layout_height="85dp"
                  android:src="@drawable/ic_pause"
     />
 
     <ImageButton android:id="@+id/ibPlay"
-                 android:layout_width="60dp" android:layout_height="60dp"
+                 android:layout_width="85dp" android:layout_height="85dp"
                  android:src="@drawable/ic_play"
     />
 
