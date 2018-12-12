@@ -1,16 +1,20 @@
 package ca.six.simpleaudio
 
-import android.media.session.MediaSession
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserServiceCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
+import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
 
 
 class PlayerService : MediaBrowserServiceCompat() {
     private val MEDIA_SESSION_TAG = "SimpleAudio_MediaSessionTag"
+    private val SIMPLE_AUDIO_EMPTY_PARENT_ID = "ca.six.SIMPLE_AUDIO_EMPTY_PARENT_ID"
 
     private lateinit var mediaSession: MediaSessionCompat
     private lateinit var playerHolder: PlayerHolder
@@ -18,7 +22,14 @@ class PlayerService : MediaBrowserServiceCompat() {
     override fun onCreate() {
         super.onCreate()
 
+        // TODO remove it to outside
+        val userAgent = Util.getUserAgent(this, "SimpleAudio") // Util from Exo
+        val mediaUri = Uri.parse("assets:///jazz_in_paris.mp3")
+        val dataSrcFactory = DefaultDataSourceFactory(this, userAgent)
+        val mediaSource = ExtractorMediaSource(mediaUri, dataSrcFactory, DefaultExtractorsFactory(), null, null)
+
         playerHolder = PlayerHolder(this)
+        playerHolder.initPlayer(mediaSource)
 
         val playbackState = PlaybackStateCompat.Builder()
             .setActions(
@@ -46,12 +57,18 @@ class PlayerService : MediaBrowserServiceCompat() {
         mediaSession.release()
     }
 
-    override fun onLoadChildren(parentId: String, result: Result<MutableList<MediaBrowserCompat.MediaItem>>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onLoadChildren(parentId: String, result: Result<List<MediaBrowserCompat.MediaItem>>) {
+        // forbid the browsing from outside
+        if (SIMPLE_AUDIO_EMPTY_PARENT_ID == parentId) { //kotlin中string的比较可以用==, 而不是一定要用equals()
+            result.sendResult(null)
+            return
+        }
+
+        result.sendResult(emptyList())
     }
 
     override fun onGetRoot(clientPackageName: String, clientUid: Int, rootHints: Bundle?): BrowserRoot? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return MediaBrowserServiceCompat.BrowserRoot(SIMPLE_AUDIO_EMPTY_PARENT_ID, null)
     }
 
     inner class MediaSessionCallback : MediaSessionCompat.Callback() {
@@ -85,6 +102,8 @@ class PlayerService : MediaBrowserServiceCompat() {
 // ref: https://cdn-images-1.medium.com/max/2000/1*VtWayH4MGWkH35wo8WO0XQ.png
 
 /*
-1. MediaBrowserServiceCompat requires the 'com.android.support:support-media-compat:<version>' package
+1. MediaBrowserServiceCompat requires the 'com.android.support:support-media-compat:<version>' dependency
+
+2.
 
  */
