@@ -9,11 +9,11 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 
 class SimplePlayEventListener : Player.EventListener {
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-        println("szw PlayEventListenr onPlayerStateChanged()")
+//        println("szw PlayEventListenr onPlayerStateChanged()")
     }
 
     override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
-        println("szw PlayEventListenr onPlaybackParametersChanged()")
+//        println("szw PlayEventListenr onPlaybackParametersChanged()")
     }
 
     override fun onPlayerError(error: ExoPlaybackException) {
@@ -22,30 +22,30 @@ class SimplePlayEventListener : Player.EventListener {
     }
 
     override fun onSeekProcessed() {
-        println("szw PlayEventListenr onSeekProcessed()")
+//        println("szw PlayEventListenr onSeekProcessed()")
     }
 
     override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {
-        println("szw PlayEventListenr onTracksChanged()")
+//        println("szw PlayEventListenr onTracksChanged()")
     }
 
     override fun onLoadingChanged(isLoading: Boolean) {
-        println("szw PlayEventListenr onLoadingChanged()")
+//        println("szw PlayEventListenr onLoadingChanged()")
     }
 
     override fun onPositionDiscontinuity(reason: Int) {
-        println("szw PlayEventListenr onPositionDiscontinuity()")
+//        println("szw PlayEventListenr onPositionDiscontinuity()")
     }
 
     override fun onRepeatModeChanged(repeatMode: Int) {
-        println("szw PlayEventListenr onRepeatModeChanged()")
+//        println("szw PlayEventListenr onRepeatModeChanged()")
     }
 
     override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {
-        println("szw PlayEventListenr onShuffleModeEnabledChanged()")
+//        println("szw PlayEventListenr onShuffleModeEnabledChanged()")
     }
 
     override fun onTimelineChanged(timeline: Timeline?, manifest: Any?) {
-        println("szw PlayEventListenr onTimelineChanged()")
+//        println("szw PlayEventListenr onTimelineChanged()")
     }
 }

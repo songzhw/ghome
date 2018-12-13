@@ -1,5 +1,6 @@
 package ca.six.simpleaudio
 
+import android.app.SearchManager
 import android.content.ComponentName
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
@@ -16,6 +17,9 @@ class PlayerActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
+        val query = getIntent().getStringExtra(SearchManager.QUERY)
+        println("szw activity query = ${query}")
+
         val componentName = ComponentName(this, PlayerService::class.java)
         mediaBrowser = MediaBrowserCompat(this, componentName, connectionCallbacks, null)
 
@@ -30,14 +34,10 @@ class PlayerActivity : AppCompatActivity(), View.OnClickListener {
             val token = mediaBrowser.sessionToken
             mediaController = MediaControllerCompat(activity, token)
             MediaControllerCompat.setMediaController(activity, mediaController)
-        }
 
-        override fun onConnectionSuspended() {
-            println("szw PlayerActivity connectCallback : onConnectionSuspended()")
-        }
+            mediaController.registerCallback(object : MediaControllerCompat.Callback() {
 
-        override fun onConnectionFailed() {
-            println("szw PlayerActivity connectCallback : onConnectionFailed()")
+            })
         }
     }
 

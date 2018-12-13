@@ -15,6 +15,7 @@ import com.google.android.exoplayer2.util.Util
 class PlayerService : MediaBrowserServiceCompat() {
     private val MEDIA_SESSION_TAG = "SimpleAudio_MediaSessionTag"
     private val SIMPLE_AUDIO_EMPTY_PARENT_ID = "ca.six.SIMPLE_AUDIO_EMPTY_PARENT_ID"
+    private val MEDIA_ID_ROOT = "MEDIA_ID_ROOT"
 
     private lateinit var mediaSession: MediaSessionCompat
     private lateinit var playerHolder: PlayerHolder
@@ -58,6 +59,7 @@ class PlayerService : MediaBrowserServiceCompat() {
     }
 
     override fun onLoadChildren(parentId: String, result: Result<List<MediaBrowserCompat.MediaItem>>) {
+        println("szw service.onLoadChildren($parentId)")
         // forbid the browsing from outside
         if (SIMPLE_AUDIO_EMPTY_PARENT_ID == parentId) { //kotlin中string的比较可以用==, 而不是一定要用equals()
             result.sendResult(null)
@@ -67,8 +69,10 @@ class PlayerService : MediaBrowserServiceCompat() {
         result.sendResult(emptyList())
     }
 
+    // clientPkgName: ca.six.simpleaudio, clientUid=10402, rootHints: [{}]
     override fun onGetRoot(clientPackageName: String, clientUid: Int, rootHints: Bundle?): BrowserRoot? {
-        return MediaBrowserServiceCompat.BrowserRoot(SIMPLE_AUDIO_EMPTY_PARENT_ID, null)
+        println("szw service.onGetRoot($clientPackageName)")
+        return MediaBrowserServiceCompat.BrowserRoot(MEDIA_ID_ROOT, null)
     }
 
     inner class MediaSessionCallback : MediaSessionCompat.Callback() {
@@ -89,7 +93,7 @@ class PlayerService : MediaBrowserServiceCompat() {
 
 
         override fun onPlayFromSearch(query: String?, extras: Bundle?) {
-            println("szw MediaSessionCallback onPlayFromSearch()")
+            println("szw MediaSessionCallback onPlayFromSearch($query) : $extras")
         }
 
         override fun onPlayFromUri(uri: Uri, extras: Bundle?) {
