@@ -20,7 +20,7 @@ class PlayerService : MediaBrowserServiceCompat() {
 
   private lateinit var mediaSession: MediaSessionCompat
   private lateinit var playerHolder: PlayerHolder
-  private val packageValidator = PackageValidator(this)
+  private lateinit var packageValidator : PackageValidator
 
   override fun onCreate() {
     super.onCreate()
@@ -31,6 +31,7 @@ class PlayerService : MediaBrowserServiceCompat() {
     val dataSrcFactory = DefaultDataSourceFactory(this, userAgent)
     val mediaSource = ExtractorMediaSource(mediaUri, dataSrcFactory, DefaultExtractorsFactory(), null, null)
 
+    packageValidator = PackageValidator(this)
     playerHolder = PlayerHolder(this)
     playerHolder.initPlayer(mediaSource)
 
