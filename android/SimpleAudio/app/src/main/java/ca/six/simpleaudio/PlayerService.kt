@@ -1,5 +1,7 @@
 package ca.six.simpleaudio
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
@@ -47,11 +49,18 @@ class PlayerService : MediaBrowserServiceCompat() {
       .build()
 
     mediaSession = MediaSessionCompat(this, TAG_FOR_DEBUG)
+    this.sessionToken = mediaSession.sessionToken
     mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS or MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS)
     mediaSession.setPlaybackState(playbackState) //由Builder生成, 主要就是响应哪些action(play, pause, playFromSearch..)
     mediaSession.setCallback(MediaSessionCallback())
 
-    this.sessionToken = mediaSession.sessionToken
+    val context = applicationContext
+    val intent = Intent(context, PlayerActivity::class.java)
+    val pi = PendingIntent.getActivity(
+      context, 99 /*request code*/,
+      intent, PendingIntent.FLAG_UPDATE_CURRENT
+    )
+    mediaSession.setSessionActivity(pi)
 
   }
 
