@@ -8,44 +8,44 @@ import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 
 class SimplePlayEventListener : Player.EventListener {
-    override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+  override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
 //        println("szw PlayEventListenr onPlayerStateChanged()")
-    }
+  }
 
-    override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
+  override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
 //        println("szw PlayEventListenr onPlaybackParametersChanged()")
-    }
+  }
 
-    override fun onPlayerError(error: ExoPlaybackException) {
-        println("szw PlayEventListenr onPlayerError() $error, ${error.type}")
+  override fun onPlayerError(error: ExoPlaybackException) {
+    println("szw PlayEventListenr onPlayerError() $error, ${error.type}")
 
-    }
+  }
 
-    override fun onSeekProcessed() {
+  override fun onSeekProcessed() {
 //        println("szw PlayEventListenr onSeekProcessed()")
-    }
+  }
 
-    override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {
+  override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {
 //        println("szw PlayEventListenr onTracksChanged()")
-    }
+  }
 
-    override fun onLoadingChanged(isLoading: Boolean) {
+  override fun onLoadingChanged(isLoading: Boolean) {
 //        println("szw PlayEventListenr onLoadingChanged()")
-    }
+  }
 
-    override fun onPositionDiscontinuity(reason: Int) {
+  override fun onPositionDiscontinuity(reason: Int) {
 //        println("szw PlayEventListenr onPositionDiscontinuity()")
-    }
+  }
 
-    override fun onRepeatModeChanged(repeatMode: Int) {
+  override fun onRepeatModeChanged(repeatMode: Int) {
 //        println("szw PlayEventListenr onRepeatModeChanged()")
-    }
+  }
 
-    override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {
+  override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {
 //        println("szw PlayEventListenr onShuffleModeEnabledChanged()")
-    }
+  }
 
-    override fun onTimelineChanged(timeline: Timeline?, manifest: Any?) {
+  override fun onTimelineChanged(timeline: Timeline?, manifest: Any?) {
 //        println("szw PlayEventListenr onTimelineChanged()")
-    }
+  }
 }
