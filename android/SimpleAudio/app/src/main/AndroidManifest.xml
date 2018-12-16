@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".EntryActivity" android:icon="@mipmap/ic_launcher"/>
+
         <service android:name=".PlayerService" android:exported="true" tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService"/>

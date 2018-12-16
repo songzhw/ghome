@@ -55,7 +55,7 @@ class PlayerService : MediaBrowserServiceCompat() {
     mediaSession.setCallback(MediaSessionCallback())
 
     val context = applicationContext
-    val intent = Intent(context, PlayerActivity::class.java)
+    val intent = Intent(context, EntryActivity::class.java)
     val pi = PendingIntent.getActivity(
       context, 99 /*request code*/,
       intent, PendingIntent.FLAG_UPDATE_CURRENT
