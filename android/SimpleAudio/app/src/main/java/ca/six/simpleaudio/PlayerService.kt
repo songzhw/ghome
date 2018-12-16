@@ -16,9 +16,11 @@ class PlayerService : MediaBrowserServiceCompat() {
   private val TAG_FOR_DEBUG = "Service_Tag"
   private val SIMPLE_AUDIO_EMPTY_PARENT_ID = "ca.six.SIMPLE_AUDIO_EMPTY_PARENT_ID"
   private val MEDIA_ID_ROOT = "MEDIA_ID_ROOT"
+  private val EMPTY_MEDIA_ID_ROOT = "EMPTY_MEDIA_ID_ROOT"
 
   private lateinit var mediaSession: MediaSessionCompat
   private lateinit var playerHolder: PlayerHolder
+  private val packageValidator = PackageValidator(this)
 
   override fun onCreate() {
     super.onCreate()
@@ -58,22 +60,6 @@ class PlayerService : MediaBrowserServiceCompat() {
     mediaSession.release()
   }
 
-  override fun onLoadChildren(parentId: String, result: Result<List<MediaBrowserCompat.MediaItem>>) {
-    println("szw service.onLoadChildren($parentId)")
-    // forbid the browsing from outside
-    if (SIMPLE_AUDIO_EMPTY_PARENT_ID == parentId) { //kotlin中string的比较可以用==, 而不是一定要用equals()
-      result.sendResult(null)
-      return
-    }
-
-    result.sendResult(emptyList())
-  }
-
-  // clientPkgName: ca.six.simpleaudio, clientUid=10402, rootHints: [{}]
-  override fun onGetRoot(clientPackageName: String, clientUid: Int, rootHints: Bundle?): BrowserRoot? {
-    println("szw service.onGetRoot($clientPackageName)")
-    return MediaBrowserServiceCompat.BrowserRoot(MEDIA_ID_ROOT, null)
-  }
 
   inner class MediaSessionCallback : MediaSessionCompat.Callback() {
     override fun onPlay() {
@@ -100,6 +86,32 @@ class PlayerService : MediaBrowserServiceCompat() {
       println("szw MediaSessionCallback onPlayFromUri($uri) : $extras")
     }
   }
+
+  // = = = = = = = = = = = = = = = = = = = = = = = =
+
+  // clientPkgName: ca.six.simpleaudio, clientUid=10402, rootHints: [{}]
+  override fun onGetRoot(clientPackageName: String, clientUid: Int, rootHints: Bundle?): BrowserRoot? {
+    println("szw service.onGetRoot($clientPackageName)")
+    if (!packageValidator.isCallerAllowed(this, clientPackageName, clientUid)) {
+      return MediaBrowserServiceCompat.BrowserRoot(EMPTY_MEDIA_ID_ROOT, null)
+    }
+
+    return MediaBrowserServiceCompat.BrowserRoot(MEDIA_ID_ROOT, null)
+  }
+
+  override fun onLoadChildren(parentId: String, result: Result<List<MediaBrowserCompat.MediaItem>>) {
+    println("szw service.onLoadChildren($parentId)")
+    // forbid the browsing from outside
+    if (SIMPLE_AUDIO_EMPTY_PARENT_ID == parentId) { //kotlin中string的比较可以用==, 而不是一定要用equals()
+      result.sendResult(null)
+      return
+    }
+
+    result.sendResult(emptyList())
+  }
+
+
+
 
 }
 
