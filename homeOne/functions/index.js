@@ -1,9 +1,9 @@
+const { dialogflow } = require("actions-on-google");
 const functions = require("firebase-functions");
-// const app = dialogflow({ debug: true });
+const app = dialogflow({ debug: true });
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
+app.intent('manu music', (conv, {playbackOne}) => {
+    conv.close(`here is the playback ${playbackOne}`)
+})
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
-});
+exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
