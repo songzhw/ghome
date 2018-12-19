@@ -20,7 +20,7 @@ const app = dialogflow({ debug: true });
 // })
 
 app.intent('manu music', (conv, {playbackOne}) => {
-    let audioSrc = "http://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3"
+    let audioSrc = "https://s1.vocaroo.com/media/download_temp/Vocaroo_s1aKfXwJUaLz.mp3"
     let resultStr = `<speak>${playbackOne} <audio src="${audioSrc}"/> </speak>`;
     conv.ask(resultStr)
     conv.ask(new Suggestions('Got it', "No, thanks"))
