@@ -20,7 +20,8 @@ const app = dialogflow({ debug: true });
 // })
 
 app.intent('manu music', (conv, {playbackOne}) => {
-    let audioSrc = "https://s1.vocaroo.com/media/download_temp/Vocaroo_s1aKfXwJUaLz.mp3"
+    // let audioSrc = "https://s1.vocaroo.com/media/download_temp/Vocaroo_s1aKfXwJUaLz.mp3"  // music: < 120s
+    let audioSrc = "https://s1.vocaroo.com/media/download_temp/Vocaroo_s12PH97aukdO.mp3" // audiobook : > 120s. And <speak> plays the whole 3:06s
     let resultStr = `<speak>${playbackOne} <audio src="${audioSrc}"/> </speak>`;
     conv.ask(resultStr)
     conv.ask(new Suggestions('Got it', "No, thanks"))
