@@ -1,4 +1,4 @@
-const { dialogflow, Suggestions, MediaObject, Image } = require("actions-on-google");
+const { dialogflow, Suggestions, MediaObject, Image, SimpleResponse } = require("actions-on-google");
 const functions = require("firebase-functions");
 const app = dialogflow({ debug: true });
 
@@ -8,7 +8,9 @@ app.intent('manu music', (conv, {playbackOne}) => {
     return;
   }
   conv.ask(`okay, let's ${playbackOne}`)
-  conv.ask(new MediaObject({
+  conv.ask(new SimpleResponse("I am Simple Reponse"))
+  conv.ask(new Suggestions("Yes","No"))
+  conv.close(new MediaObject({
     name: 'Jazz in Paris',
     url: 'https://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3',
     description: 'A funky Jazz tune',
@@ -17,8 +19,6 @@ app.intent('manu music', (conv, {playbackOne}) => {
       alt: 'Ocean view',
     }),
   }));
-  app.ask(new Suggestions("Yes","No"))
-//   app.close('this is the end')
 })
 
 // app.intent('manu music', (conv, {playbackOne, company}) => {
