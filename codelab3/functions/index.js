@@ -18,16 +18,16 @@ const app = dialogflow({ debug: true });
 
 // Handle the Dialogflow intent named 'Default Welcome Intent'.
 app.intent("Default Welcome Intent", conv => {
-  const name = conv.user.storage.userName2;
+  const name = conv.user.storage.userName;
   if (!name) {
     conv.ask(
       new Permission({
-        context: "Hi there, to get to know you better",
+        context: "verson 2, Hi there, to get to know you better",
         permissions: "NAME"
       })
     );
   } else {
-    conv.ask(`Hi again, ${name}. What's your favorite color?`);
+    conv.ask(`verson 2, Hi again, ${name}. What's your favorite color?`);
   }
 });
 
@@ -41,9 +41,9 @@ app.intent("actions_intent_PERMISSION", (conv, params, permissionGranted) => {
   } else {
     // If the user accepted our request, store their name in
     // the 'conv.user.storage' object for the duration of the conversation.
-    conv.user.storage.userName2 = conv.user.name.display;
+    conv.user.storage.userName = conv.user.name.display;
     conv.ask(
-      `Thanks, ${conv.user.storage.userName2}. What's your favorite color?`
+      `Thanks, ${conv.user.storage.userName}. What's your favorite color?`
     );
     conv.ask(new Suggestions("Blue", "Red", "Green"));
   }
@@ -56,9 +56,9 @@ app.intent("favorite color", (conv, { color }) => {
   const audioSound =
     "https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg";
   let moreWord = "Would you like to hear some fake colors?";
-  if (conv.user.storage.userName2) {
+  if (conv.user.storage.userName) {
     let word = `${
-      conv.user.storage.userName2
+      conv.user.storage.userName
     }, your lucky number is ${luckyNumber}`;
     let wordWithSound = `<speak>${word} <audio src="${audioSound}"/> ${moreWord} </speak>`;
     conv.ask(wordWithSound);
