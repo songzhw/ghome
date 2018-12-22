@@ -12,7 +12,7 @@ app.intent('manu music', (conv, {playbackOne}) => {
   conv.ask(new Suggestions("Yes","No"))
   conv.close(new MediaObject({
     name: 'Jazz in Paris',
-    url: 'https://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3',
+    url: 'https://s1.vocaroo.com/media/download_temp/Vocaroo_s1cJCrKVFdol.mp3',
     description: 'A funky Jazz tune',
     icon: new Image({
       url: 'https://storage.googleapis.com/automotive-media/album_art.jpg',
@@ -20,6 +20,8 @@ app.intent('manu music', (conv, {playbackOne}) => {
     }),
   }));
 })
+// https://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3  : streaming type, 01:42 long
+// https://s1.vocaroo.com/media/download_temp/Vocaroo_s1cJCrKVFdol.mp3: streaming type, 15:05 long
 
 // app.intent('manu music', (conv, {playbackOne, company}) => {
 //     // let audioSrc = "https://s1.vocaroo.com/media/download_temp/Vocaroo_s1aKfXwJUaLz.mp3"  // music: < 120s
