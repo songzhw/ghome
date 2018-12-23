@@ -8,24 +8,17 @@ const {
 const functions = require("firebase-functions");
 const app = dialogflow({ debug: true });
 
-app.intent("manu music", (conv, { playbackOne, company }) => {
-  if (
-    !conv.surface.capabilities.has("actions.capability.MEDIA_RESPONSE_AUDIO")
-  ) {
-    conv.ask("Sorry, this device does not support audio playback.");
-    return;
+app.intent("temporary", conv => {
+  let offset = conv.user.storage.offset;
+  if (offset) {
+    conv.ask(`version 11, the offset we just saved is ${offset}`);
+  } else {
+    conv.ask("we don not have any offest saved");
   }
-  conv.ask(`okay, version 6, let's ${playbackOne} on ${company}`);
+});
 
-  // const offset = conv.user.storage.offset;
-  // if (!offset) {
-  //   conv.user.storage.offset = 23;
-  //   conv.ask("no offset cached ");
-  // } else {
-  //   conv.ask(`cached offset is ${offset}`);
-  // }
-
-  conv.ask(new SimpleResponse("I am Simple Reponse"));
+app.intent("manu music", (conv, { playbackOne }) => {
+  conv.ask(new SimpleResponse("version 11"));
 
   conv.ask(
     new MediaObject({
@@ -40,17 +33,23 @@ app.intent("manu music", (conv, { playbackOne, company }) => {
   );
 
   conv.ask(new Suggestions("Yes", "No"));
+
+  const mediaStatus = conv.arguments.get("MEDIA_STATUS");
+  if (mediaStatus) {
+    conv.ask(`playback status = ${mediaStatus.status}`);
+  } else {
+    conv.ask("empty status ");
+  }
 });
 // https://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3  : streaming type, 01:42 long
 // https://s1.vocaroo.com/media/download_temp/Vocaroo_s1cJCrKVFdol.mp3: streaming type, 15:05 long
 // https://s3.ca-central-1.amazonaws.com/test-audiobooks/sample.mp3 : streaming type, 1:12:55
 
-// app.intent('manu music', (conv, {playbackOne, company}) => {
-//     // let audioSrc = "https://s1.vocaroo.com/media/download_temp/Vocaroo_s1aKfXwJUaLz.mp3"  // music: < 120s
-//     let audioSrc = "https://s1.vocaroo.com/media/download_temp/Vocaroo_s12PH97aukdO.mp3" // audiobook : > 120s. And <speak> plays the whole 3:06s
-// let resultStr = `<speak>${playbackOne} on ${company}<audio src="${audioSrc}"/> </speak>`;
-//     conv.ask(resultStr)
-//     conv.ask(new Suggestions('Got it', "No, thanks"))
-// })
+app.intent("leave conv", conv => {
+  // TODO get the offset from the playback
+  let savedOffset = Math.floor(Math.random() * 100);
+  conv.user.storage.offset = savedOffset;
+  conv.close(`Let me know when you want to resume this audio book : ${conv.user.storage.offset}`);
+});
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
