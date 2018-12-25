@@ -36,19 +36,21 @@ app.intent("manu music", (conv, { playbackOne }) => {
 
   conv.ask(new Suggestions("Yes", "No"));
   });
-
-  // It seems it only says the word when the playing is finished
-app.intent('MEDIA_STATUS', (conv) => {
-  const mediaStatus = conv.arguments.get("MEDIA_STATUS");
-  if (mediaStatus) {
-    conv.ask(`playback status = ${mediaStatus.status}`);
-  } else {
-    conv.ask("empty status ");
-  }
-});
 // https://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3  : streaming type, 01:42 long
 // https://s1.vocaroo.com/media/download_temp/Vocaroo_s1cJCrKVFdol.mp3: streaming type, 15:05 long
 // https://s3.ca-central-1.amazonaws.com/test-audiobooks/sample.mp3 : streaming type, 1:12:55
+
+
+  // It seems it only says the word when the playing is finished
+  app.intent('MEDIA_STATUS', (conv) => {
+    const mediaStatus = conv.arguments.get("MEDIA_STATUS");
+    if (mediaStatus) {
+      conv.ask(`playback status = ${mediaStatus.status}`);
+    } else {
+      conv.ask("empty status ");
+    }
+  });
+
 
 app.intent("leave conv", conv => {
   // TODO get the offset from the playback
