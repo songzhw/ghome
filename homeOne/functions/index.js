@@ -8,22 +8,24 @@ const {
 const functions = require("firebase-functions");
 const app = dialogflow({ debug: true });
 
-app.intent("temporary", conv => {
+const version = 14
+app.intent("Default Welcome Intent", conv => {
   let offset = conv.user.storage.offset;
+  let start = `version ${version}. Welcome`
   if (offset) {
-    conv.ask(`version 11, the offset we just saved is ${offset}`);
+    conv.ask(`${start}. the offset we just saved is ${offset}`);
   } else {
-    conv.ask("we don not have any offest saved");
+    conv.ask(`${start}. we don not have any offest saved`);
   }
 });
 
 app.intent("manu music", (conv, { playbackOne }) => {
-  conv.ask(new SimpleResponse("version 11"));
+  conv.ask(new SimpleResponse(`version ${version}`));
 
   conv.ask(
     new MediaObject({
       name: "Jazz in Paris",
-      url: "https://s3.ca-central-1.amazonaws.com/test-audiobooks/sample.mp3 ",
+      url: "https://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3",
       description: "A funky Jazz tune",
       icon: new Image({
         url: "https://storage.googleapis.com/automotive-media/album_art.jpg",
@@ -33,13 +35,10 @@ app.intent("manu music", (conv, { playbackOne }) => {
   );
 
   conv.ask(new Suggestions("Yes", "No"));
+  });
 
-  const mediaStatus = conv.arguments.get("MEDIA_STATUS");
-  if (mediaStatus) {
-    conv.ask(`playback status = ${mediaStatus.status}`);
-  } else {
-    conv.ask("empty status ");
-  }
+app.intent('MEDIA_STATUS', (conv) => {
+
 });
 // https://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3  : streaming type, 01:42 long
 // https://s1.vocaroo.com/media/download_temp/Vocaroo_s1cJCrKVFdol.mp3: streaming type, 15:05 long
