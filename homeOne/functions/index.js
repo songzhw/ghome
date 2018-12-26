@@ -8,7 +8,9 @@ const {
 const functions = require("firebase-functions");
 const app = dialogflow({ debug: true });
 
-const version = 18;
+const version = 20;
+var offset = 0;
+var intervalId = 0
 app.intent("Default Welcome Intent", conv => {
   let offset = conv.user.storage.offset;
   let start = `version ${version}. Welcome`;
@@ -40,8 +42,7 @@ app.intent("Default Welcome Intent", conv => {
 // https://s1.vocaroo.com/media/download_temp/Vocaroo_s1cJCrKVFdol.mp3: streaming type, 15:05 long
 // https://s3.ca-central-1.amazonaws.com/test-audiobooks/sample.mp3 : streaming type, 1:12:55
 
-var offset = 0;
-var intervalId = 0
+
 
 app.intent("manu music", (conv, { playbackOne, company }) => {
   let audioSrc = "https://s3.ca-central-1.amazonaws.com/test-audiobooks/sample.mp3";
@@ -67,11 +68,12 @@ app.intent("leave conv", conv => {
   let savedOffset = Math.floor(Math.random() * 100);
   conv.user.storage.offset = savedOffset;
   clearInterval(intervalId)
-  conv.close(
-    `Let me know when you want to resume this audio book : ${
-      conv.user.storage.offset
-    }, offset = ${offset}`
-  );
+  // conv.close(
+  //   `Let me know when you want to resume this audio book : ${
+  //     conv.user.storage.offset
+  //   }, offset = ${offset}`
+  // );
+  conv.close(`offset = ${JSON.stringify(offset)}`)
 });
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
